@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function AuthNavigator() {

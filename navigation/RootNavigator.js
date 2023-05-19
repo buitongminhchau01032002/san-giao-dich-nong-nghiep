@@ -6,6 +6,9 @@ import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
+import SignupScreen from '../screens/LoginScreen/Signup';
+import LoginScreen from '../screens/LoginScreen';
+
 
 export default function Navigation() {
     // hooks
@@ -34,7 +37,7 @@ const Stack = createNativeStackNavigator();
 function RootNavigator() {
     // const isAppReady = useAppSelector((state) => state.application.isAppReady);
     // const { isLogin } = useAppSelector((state) => state.auth);
-    const isLogin = true;
+    const isLogin = false;
     // console.log(isAppReady);
     // if (!isAppReady) {
     //     return <IntroScreen />;
@@ -59,6 +62,16 @@ function RootNavigator() {
                     options={{ headerShown: true }}
                 />
             </Stack.Group>
+           
+            <Stack.Screen options={{
+                headerShown: false,gestureEnabled: false}}
+                name="login" 
+                component={LoginScreen} />
+             <Stack.Screen options={{
+                headerShown: false,gestureEnabled: false}} 
+                name="signup" 
+                component={SignupScreen}/>
+            
         </Stack.Navigator>
     );
 }
