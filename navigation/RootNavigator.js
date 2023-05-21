@@ -6,6 +6,7 @@ import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
+import ProductListScreen from '../screens/ProductListScreen';
 
 export default function Navigation() {
     // hooks
@@ -59,6 +60,17 @@ function RootNavigator() {
                     options={{ headerShown: true }}
                 />
             </Stack.Group>
+
+            <Stack.Group navigationKey={isLogin ? 'user' : 'guest'} screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
+                    name={NAVIGATION_KEY.ProductList}
+                    component={ProductListScreen}
+                    options={{ 
+                        title:"Phân loại",
+                        headerShown: true }}
+                />
+            </Stack.Group>
+            
         </Stack.Navigator>
     );
 }

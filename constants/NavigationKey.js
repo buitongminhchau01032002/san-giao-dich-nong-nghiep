@@ -5,6 +5,7 @@ const NAVIGATION_KEY = {
     Auth: 'Auth',
     AppTabs: 'AppTabs',
     SamplePopup: 'SamplePopup',
+    ProductList: 'ProductList',
 };
 
 export default NAVIGATION_KEY;
