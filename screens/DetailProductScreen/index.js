@@ -1,6 +1,7 @@
-import { Button, Divider, HStack, Image, NumberInputStepper, ScrollView, Text, View } from 'native-base';
+import { Button, Center, Divider, HStack, Image, Input, Menu, Pressable, ScrollView, Text, View } from 'native-base';
 import QuantityInput from './components/QuantityInput';
 import { useEffect, useState } from 'react';
+import { Entypo } from '@expo/vector-icons';
 
 const PRODUCT = {
     name: 'Hạt điều nâu cao cấp nhập khẩu, chính hãng giá rẻ',
@@ -20,6 +21,20 @@ const PRODUCT = {
     minPurchase: 10,
     price: 100000,
     unit: 'gói',
+    comments: [
+        {
+            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
+            name: 'Minh Châu',
+            createdAt: '20/10/2023',
+            content: 'Sản phẩm này rất chất lượng, mọi người nên thử',
+        },
+        {
+            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
+            name: 'Minh Châu',
+            createdAt: '20/10/2023',
+            content: 'Sản phẩm này rất chất lượng, mọi người nên thử. Sản phẩm này rất chất lượng, mọi người nên thử',
+        },
+    ],
 };
 
 function DetailProductScreen() {
@@ -29,6 +44,9 @@ function DetailProductScreen() {
         setProduct(PRODUCT);
         // TODO: call api
     }, []);
+    function handleDeleteComment(idComment) {
+        console.log('delete comment', idComment);
+    }
     return (
         <View position="relative" flex={1}>
             <View pb="60">
@@ -54,6 +72,7 @@ function DetailProductScreen() {
                         color="gray.700"
                         fontWeight="medium"
                     >{`Còn lại: ${product?.quantity} ${product?.unit}`}</Text>
+                    {/* SELLER */}
                     <Divider my="2" />
                     <Text fontSize="16" fontWeight="medium">
                         Được cung cấp bởi:
@@ -69,6 +88,47 @@ function DetailProductScreen() {
                         Mô tả sản phẩm:
                     </Text>
                     <Text mt="1" color="gray.700">{`Sản lượng: ${product?.description}`}</Text>
+                    {/* COMMENT */}
+                    <Divider my="2" />
+                    <Text fontSize="16" fontWeight="medium">
+                        Bình luận:
+                    </Text>
+                    <Input mt="2" placeholder="Viết bình luận" />
+                    <View mt="2">
+                        {product?.comments?.map((comment) => (
+                            <View py="3">
+                                <HStack alignItems="center" justifyContent="space-between">
+                                    <HStack alignItems="center">
+                                        <Image source={{ uri: comment?.avatar }} h="9" w="9" rounded="full" alt="" />
+                                        <View pl="2">
+                                            <Text fontSize="14" fontWeight="bold">
+                                                {comment?.name}
+                                            </Text>
+                                            <Text fontSize="12" color="gray.700">
+                                                {comment?.createdAt}
+                                            </Text>
+                                        </View>
+                                    </HStack>
+                                    <Menu
+                                        trigger={(triggerProps) => {
+                                            return (
+                                                <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+                                                    <Center p="2">
+                                                        <Entypo name="dots-three-vertical" size={16} color="#444" />
+                                                    </Center>
+                                                </Pressable>
+                                            );
+                                        }}
+                                    >
+                                        <Menu.Item onPress={() => handleDeleteComment('id')}>Xoá bình luận</Menu.Item>
+                                    </Menu>
+                                </HStack>
+                                <Text>{comment?.content}</Text>
+                            </View>
+                        ))}
+                    </View>
+                    {/* PADDING */}
+                    <View h="2"></View>
                 </ScrollView>
             </View>
 
