@@ -6,8 +6,8 @@ import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
-import SignupScreen from '../screens/LoginScreen/Signup';
 import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen/Signup';
 
 
 export default function Navigation() {
