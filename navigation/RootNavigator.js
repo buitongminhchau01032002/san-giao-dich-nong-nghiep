@@ -6,6 +6,7 @@ import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
+import DetailProductScreen from '../screens/DetailProductScreen';
 
 export default function Navigation() {
     // hooks
@@ -56,6 +57,11 @@ function RootNavigator() {
                 <Stack.Screen
                     name={NAVIGATION_KEY.SamplePopup}
                     component={SamplePopupScreen}
+                    options={{ headerShown: true }}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.DetailProduct}
+                    component={DetailProductScreen}
                     options={{ headerShown: true }}
                 />
             </Stack.Group>
