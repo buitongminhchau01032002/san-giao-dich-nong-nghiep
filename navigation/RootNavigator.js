@@ -8,6 +8,8 @@ import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen/Signup';
+import SupplierRegisterScreen from '../screens/UserScreens/SupplierRegister/RegisterScreen';
+import SellProductScreen from '../screens/UserScreens/SellProduct/SellProduct';
 
 
 export default function Navigation() {
@@ -37,7 +39,7 @@ const Stack = createNativeStackNavigator();
 function RootNavigator() {
     // const isAppReady = useAppSelector((state) => state.application.isAppReady);
     // const { isLogin } = useAppSelector((state) => state.auth);
-    const isLogin = false;
+    const isLogin = true;
     // console.log(isAppReady);
     // if (!isAppReady) {
     //     return <IntroScreen />;
@@ -71,7 +73,22 @@ function RootNavigator() {
                 headerShown: false,gestureEnabled: false}} 
                 name="signup" 
                 component={SignupScreen}/>
-            
+            <Stack.Screen
+                name="SupplierRegister" 
+                options={{
+                    title: 'Đăng ký nhà cung cấp',
+                    headerBackTitleVisible:false,
+                    headerBackTitle: null,
+                }}
+                component={SupplierRegisterScreen}/>
+            <Stack.Screen
+                name="SellProduct" 
+                options={{
+                    title: 'Đăng bán sản phẩm',
+                    headerBackTitleVisible:false,
+                    headerBackTitle: null,
+                }}
+                component={SellProductScreen}/>
         </Stack.Navigator>
     );
 }
