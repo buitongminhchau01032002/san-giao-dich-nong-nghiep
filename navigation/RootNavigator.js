@@ -7,6 +7,7 @@ import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
 import ProductListScreen from '../screens/ProductListScreen';
+import CartScreen from '../screens/CartScreen';
 
 export default function Navigation() {
     // hooks
@@ -65,9 +66,20 @@ function RootNavigator() {
                 <Stack.Screen
                     name={NAVIGATION_KEY.ProductList}
                     component={ProductListScreen}
-                    options={{ 
-                        title:"Phân loại",
-                        headerShown: true }}
+                    options={{
+                        title: 'Phân loại',
+                        headerShown: true,
+                    }}
+                />
+            </Stack.Group>
+            <Stack.Group navigationKey={isLogin ? 'user' : 'guest'} screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen
+                    name={NAVIGATION_KEY.Cart}
+                    component={CartScreen}
+                    options={{
+                        title: 'Giỏ hàng',
+                        headerShown: true,
+                    }}
                 />
             </Stack.Group>
             

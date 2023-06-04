@@ -6,6 +6,7 @@ const NAVIGATION_KEY = {
     AppTabs: 'AppTabs',
     SamplePopup: 'SamplePopup',
     ProductList: 'ProductList',
+    Cart:'Cart'
 };
 
 export default NAVIGATION_KEY;
