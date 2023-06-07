@@ -4,11 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './AuthNavigator';
 import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
-import HomeScreen from '../screens/HomeScreen';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
-import LoginScreen from '../screens/LoginScreen';
-import SignupScreen from '../screens/SignupScreen/Signup';
 
+import ProductListScreen from '../screens/ProductListScreen';
+import CartScreen from '../screens/CartScreen';
 
 export default function Navigation() {
     // hooks
@@ -61,17 +60,23 @@ function RootNavigator() {
                     component={SamplePopupScreen}
                     options={{ headerShown: true }}
                 />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.Cart}
+                    component={CartScreen}
+                    options={{
+                        title: 'Giỏ hàng',
+                        headerShown: true,
+                    }}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.ProductList}
+                    component={ProductListScreen}
+                    options={{
+                        title: 'Phân loại',
+                        headerShown: true,
+                    }}
+                />
             </Stack.Group>
-           
-            <Stack.Screen options={{
-                headerShown: false,gestureEnabled: false}}
-                name="login" 
-                component={LoginScreen} />
-             <Stack.Screen options={{
-                headerShown: false,gestureEnabled: false}} 
-                name="signup" 
-                component={SignupScreen}/>
-            
         </Stack.Navigator>
     );
 }

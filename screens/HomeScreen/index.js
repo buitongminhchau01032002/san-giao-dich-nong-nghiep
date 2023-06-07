@@ -6,6 +6,8 @@ function HomeScreen({ navigation }) {
         <Center flex={1}>
             <Text mb={6}>Home Screen 🔥</Text>
             <Button onPress={() => navigation.navigate(NAVIGATION_KEY.SamplePopup)}>Open Popup</Button>
+            <Button onPress={() => navigation.navigate(NAVIGATION_KEY.ProductList)}>ProductList Screen</Button>
+            <Button onPress={() => navigation.navigate(NAVIGATION_KEY.Cart)}>Cart Screen</Button>
         </Center>
     );
 }
