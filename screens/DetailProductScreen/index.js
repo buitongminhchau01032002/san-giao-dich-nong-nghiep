@@ -38,7 +38,7 @@ const PRODUCT = {
 };
 
 function DetailProductScreen() {
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState();
     const [product, setProduct] = useState(null);
     useEffect(() => {
         setProduct(PRODUCT);
@@ -95,8 +95,8 @@ function DetailProductScreen() {
                     </Text>
                     <Input mt="2" placeholder="Viết bình luận" />
                     <View mt="2">
-                        {product?.comments?.map((comment) => (
-                            <View py="3">
+                        {product?.comments?.map((comment, index) => (
+                            <View py="3" key={index}>
                                 <HStack alignItems="center" justifyContent="space-between">
                                     <HStack alignItems="center">
                                         <Image source={{ uri: comment?.avatar }} h="9" w="9" rounded="full" alt="" />
