@@ -6,10 +6,10 @@ import { StyleSheet, TouchableHighlight } from 'react-native';
 import CustomRadioButton from '../../components/CustomRadioButton';
 function CartScreen() {
     return (
-        <Box flex={1} safeAreaTop bg="#FFFFFF" mt={2}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+        <VStack flex={1} safeAreaTop bg="#FFFFFF" mt={2}>
+            <View flex={1}>
                 <CartItems />
-            </ScrollView>
+            </View>
             <HStack pt={2} pb={5}>
                 <Box alignCenter pl={6} pt={1} pr={2}>
                     <CustomRadioButton></CustomRadioButton>
@@ -38,7 +38,7 @@ function CartScreen() {
                     </Box>
                 </Flex>
             </HStack>
-        </Box>
+        </VStack>
     );
 }
 
