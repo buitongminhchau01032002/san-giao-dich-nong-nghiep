@@ -1,6 +1,7 @@
 import { Center, Text, Input, Button, View, Image } from 'native-base';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import NAVIGATION_KEY from '../../constants/NavigationKey';
 
 export default function LoginScreen({ navigation }) {
     const [show, setShow] = useState(false);
@@ -74,7 +75,7 @@ export default function LoginScreen({ navigation }) {
             </Button>
             <View marginBottom={10} flexDirection={'row'}>
                 <Text>Chưa có tài khoản ? </Text>
-                <Text color={'darkBlue.500'} onPress={() => navigation.navigate('signup')}>
+                <Text color={'darkBlue.500'} onPress={() => navigation.navigate(NAVIGATION_KEY.Signup)}>
                     Đăng ký ngay
                 </Text>
             </View>

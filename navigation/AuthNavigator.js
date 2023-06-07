@@ -12,7 +12,6 @@ export default function AuthNavigator() {
             <Stack.Screen
                 options={{
                     headerShown: false,
-                    gestureEnabled: false,
                 }}
                 name={NAVIGATION_KEY.Login}
                 component={LoginScreen}
@@ -20,7 +19,6 @@ export default function AuthNavigator() {
             <Stack.Screen
                 options={{
                     headerShown: false,
-                    gestureEnabled: false,
                 }}
                 name={NAVIGATION_KEY.Signup}
                 component={SignupScreen}
