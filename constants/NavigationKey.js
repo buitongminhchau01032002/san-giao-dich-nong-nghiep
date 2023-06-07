@@ -9,6 +9,9 @@ const NAVIGATION_KEY = {
     Cart: 'Cart',
     Signup: 'Signup',
     DetailProduct: 'DetailProduct',
+    SupplierRegister: 'SupplierRegister',
+    SellProduct: 'SellProduct',
+    User: 'User',
 };
 
 export default NAVIGATION_KEY;

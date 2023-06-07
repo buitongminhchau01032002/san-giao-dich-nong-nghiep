@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import { MyTabBar } from './MyTabBar';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'native-base';
+import UserScreen from '../screens/UserScreens/UserScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -43,10 +44,10 @@ export default function AppTabsNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen3"
-                component={HomeScreen}
+                name={NAVIGATION_KEY.User}
+                component={UserScreen}
                 options={{
-                    title: 'Test Screen 3',
+                    title: 'Cá nhân',
                     tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
                 }}
             />

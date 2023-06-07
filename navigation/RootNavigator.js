@@ -6,6 +6,8 @@ import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
 import DetailProductScreen from '../screens/DetailProductScreen';
+import SupplierRegisterScreen from '../screens/UserScreens/SupplierRegister/RegisterScreen';
+import SellProductScreen from '../screens/UserScreens/SellProduct/SellProduct';
 
 import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
@@ -81,6 +83,25 @@ function RootNavigator() {
                     name={NAVIGATION_KEY.DetailProduct}
                     component={DetailProductScreen}
                     options={{ title: 'Chi tiết', headerShown: true }}
+                />
+
+                <Stack.Screen
+                    name={NAVIGATION_KEY.SupplierRegister}
+                    options={{
+                        title: 'Đăng ký nhà cung cấp',
+                        headerBackTitleVisible: false,
+                        headerBackTitle: null,
+                    }}
+                    component={SupplierRegisterScreen}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.SellProduct}
+                    options={{
+                        title: 'Đăng bán sản phẩm',
+                        headerBackTitleVisible: false,
+                        headerBackTitle: null,
+                    }}
+                    component={SellProductScreen}
                 />
             </Stack.Group>
         </Stack.Navigator>
