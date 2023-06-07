@@ -8,6 +8,7 @@ function HomeScreen({ navigation }) {
             <Button onPress={() => navigation.navigate(NAVIGATION_KEY.SamplePopup)}>Open Popup</Button>
             <Button onPress={() => navigation.navigate(NAVIGATION_KEY.ProductList)}>ProductList Screen</Button>
             <Button onPress={() => navigation.navigate(NAVIGATION_KEY.Cart)}>Cart Screen</Button>
+            <Button onPress={() => navigation.navigate(NAVIGATION_KEY.DetailProduct)}>Open Detail Product</Button>
         </Center>
     );
 }

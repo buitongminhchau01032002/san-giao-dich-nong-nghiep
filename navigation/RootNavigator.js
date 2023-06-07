@@ -5,6 +5,7 @@ import AuthNavigator from './AuthNavigator';
 import AppTabsNavigator from './AppTabsNavigator';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
+import DetailProductScreen from '../screens/DetailProductScreen';
 
 import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
@@ -75,6 +76,11 @@ function RootNavigator() {
                         title: 'Phân loại',
                         headerShown: true,
                     }}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.DetailProduct}
+                    component={DetailProductScreen}
+                    options={{ title: 'Chi tiết', headerShown: true }}
                 />
             </Stack.Group>
         </Stack.Navigator>
