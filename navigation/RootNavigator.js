@@ -11,6 +11,8 @@ import SellProductScreen from '../screens/UserScreens/SellProduct/SellProduct';
 
 import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../redux/selectors/useSelector';
 
 export default function Navigation() {
     // hooks
@@ -39,14 +41,15 @@ const Stack = createNativeStackNavigator();
 function RootNavigator() {
     // const isAppReady = useAppSelector((state) => state.application.isAppReady);
     // const { isLogin } = useAppSelector((state) => state.auth);
-    const isLogin = true;
+    // const isLogin = true;
+    const user = useSelector(userSelector);
     // console.log(isAppReady);
     // if (!isAppReady) {
     //     return <IntroScreen />;
     // }
     return (
         <Stack.Navigator>
-            {!isLogin ? (
+            {!user ? (
                 <Stack.Screen name={NAVIGATION_KEY.Auth} component={AuthNavigator} options={{ headerShown: false }} />
             ) : (
                 <>
@@ -57,7 +60,7 @@ function RootNavigator() {
                     />
                 </>
             )}
-            <Stack.Group navigationKey={isLogin ? 'user' : 'guest'} screenOptions={{ presentation: 'modal' }}>
+            <Stack.Group navigationKey={user ? 'user' : 'guest'} screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen
                     name={NAVIGATION_KEY.SamplePopup}
                     component={SamplePopupScreen}

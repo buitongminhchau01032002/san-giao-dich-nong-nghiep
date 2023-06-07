@@ -1,13 +1,45 @@
-import { Center, Text, Input, Button, View, Image } from 'native-base';
+import { Center, Text, Input, Button, View, Image, useToast } from 'native-base';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import NAVIGATION_KEY from '../../constants/NavigationKey';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../redux/slices/userSlice';
+import API from '../../constants/Api';
 
 export default function LoginScreen({ navigation }) {
+    const dispatch = useDispatch();
+    const toast = useToast();
     const [show, setShow] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const showClick = () => setShow(!show);
     const forgetPassword = () => {};
 
+    async function handleLogin() {
+        try {
+            const res = await fetch(`${API}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
+            const data = await res.json();
+            if (data.error) {
+                toast.show({ description: data.error.message });
+                console.log(data.error);
+                return;
+            }
+            dispatch(userActions.login(data));
+            toast.show({ description: 'Đăng nhập thành công!' });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    console.log({ email, password });
     return (
         <Center flex={1}>
             <Text fontSize={22} marginBottom={'10'} fontWeight={'medium'}>
@@ -20,6 +52,8 @@ export default function LoginScreen({ navigation }) {
                 fontSize={'16'}
                 variant="underlined"
                 placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
                 _light={{
                     placeholderTextColor: 'blueGray.400',
                 }}
@@ -33,6 +67,8 @@ export default function LoginScreen({ navigation }) {
                 fontSize={'16'}
                 variant="underlined"
                 placeholder="Mật khẩu"
+                value={password}
+                onChangeText={setPassword}
                 _light={{
                     placeholderTextColor: 'blueGray.400',
                 }}
@@ -70,7 +106,7 @@ export default function LoginScreen({ navigation }) {
             >
                 Quên mật khẩu ?
             </Text> */}
-            <Button fontSize={'16'} margin={'10'} borderRadius={'30'} width={'300'}>
+            <Button fontSize={'16'} margin={'10'} borderRadius={'30'} width={'300'} onPress={handleLogin}>
                 ĐĂNG NHẬP
             </Button>
             <View marginBottom={10} flexDirection={'row'}>
