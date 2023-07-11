@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const showClick = () => setShow(!show);
-    const forgetPassword = () => {};
+    // const forgetPassword = () => {};
 
     async function handleLogin() {
         try {
@@ -37,9 +37,9 @@ export default function LoginScreen({ navigation }) {
             toast.show({ description: 'Đăng nhập thành công!' });
         } catch (error) {
             console.log(error);
+            toast.show({ description: 'Something went wrong!' });
         }
     }
-    console.log({ email, password });
     return (
         <Center flex={1}>
             <Text fontSize={22} marginBottom={'10'} fontWeight={'medium'}>
