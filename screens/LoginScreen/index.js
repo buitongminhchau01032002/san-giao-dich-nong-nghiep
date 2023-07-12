@@ -13,10 +13,12 @@ export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const showClick = () => setShow(!show);
+    const [loading, setLoading] = useState(false);
     // const forgetPassword = () => {};
 
     async function handleLogin() {
         try {
+            setLoading(true);
             const res = await fetch(`${API}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -38,6 +40,8 @@ export default function LoginScreen({ navigation }) {
         } catch (error) {
             console.log(error);
             toast.show({ description: 'Something went wrong!' });
+        } finally {
+            setLoading(false);
         }
     }
     return (
@@ -106,7 +110,14 @@ export default function LoginScreen({ navigation }) {
             >
                 Quên mật khẩu ?
             </Text> */}
-            <Button fontSize={'16'} margin={'10'} borderRadius={'30'} width={'300'} onPress={handleLogin}>
+            <Button
+                isDisabled={loading}
+                fontSize={'16'}
+                margin={'10'}
+                borderRadius={'30'}
+                width={'300'}
+                onPress={handleLogin}
+            >
                 ĐĂNG NHẬP
             </Button>
             <View marginBottom={10} flexDirection={'row'}>
