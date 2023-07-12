@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import API from '../../constants/Api';
 import ProductCard from '../../components/ProductCard';
 import { useIsFocused } from '@react-navigation/native';
+import NAVIGATION_KEY from '../../constants/NavigationKey';
 
 function HomeScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function HomeScreen({ navigation }) {
             }
             setCategories(data);
         } catch (err) {
-            console.log(error);
+            console.log(err);
         }
     }
 
@@ -42,7 +43,7 @@ function HomeScreen({ navigation }) {
             }
             setProducts(data);
         } catch (err) {
-            console.log(error);
+            console.log(err);
         }
     }
 
@@ -53,12 +54,17 @@ function HomeScreen({ navigation }) {
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <HStack space="3">
                         {categories.map((category) => (
-                            <Center key={category._id} w="24" py="2" bg="white" rounded="md">
-                                <Image src={category.icon} w="16" h="16" rounded="full" alt="" />
-                                <Text mt="1" fontSize={12}>
-                                    {category.name}
-                                </Text>
-                            </Center>
+                            <Pressable
+                                key={category._id}
+                                onPress={() => navigation.navigate(NAVIGATION_KEY.ProductList, { category })}
+                            >
+                                <Center w="24" py="2" bg="white" rounded="md">
+                                    <Image src={category.icon} w="16" h="16" rounded="full" alt="" />
+                                    <Text mt="1" fontSize={12}>
+                                        {category.name}
+                                    </Text>
+                                </Center>
+                            </Pressable>
                         ))}
                     </HStack>
                 </ScrollView>
