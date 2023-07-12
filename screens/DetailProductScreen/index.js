@@ -1,52 +1,63 @@
-import { Button, Center, Divider, HStack, Image, Input, Menu, Pressable, ScrollView, Text, View } from 'native-base';
+import {
+    Button,
+    Center,
+    Divider,
+    HStack,
+    Image,
+    Input,
+    Menu,
+    Pressable,
+    ScrollView,
+    Text,
+    Toast,
+    View,
+} from 'native-base';
 import QuantityInput from './components/QuantityInput';
 import { useEffect, useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
+import API from '../../constants/Api';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../redux/selectors/userSelector';
 
-const PRODUCT = {
-    name: 'Hạt điều nâu cao cấp nhập khẩu, chính hãng giá rẻ',
-    image: 'https://plus.unsplash.com/premium_photo-1663850873179-6a3ebbd8fe47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJ1aXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
-    category: {
-        name: 'Trái cây',
-    },
-    seller: {
-        address: 'Thành phố Hồ Chí Minh',
-        brandName: 'Hạt điều cho mọi nhà',
-        scale: '100 ha',
-        capicity: '1000 tấn',
-    },
-    quantity: 100,
-    description:
-        'Sản phẩm chất lượng nhất thế giới, Sản phẩm chất lượng nhất thế giới, Sản phẩm chất lượng nhất thế giới',
-    minPurchase: 10,
-    price: 100000,
-    unit: 'gói',
-    comments: [
-        {
-            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-            name: 'Minh Châu',
-            createdAt: '20/10/2023',
-            content: 'Sản phẩm này rất chất lượng, mọi người nên thử',
-        },
-        {
-            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
-            name: 'Minh Châu',
-            createdAt: '20/10/2023',
-            content: 'Sản phẩm này rất chất lượng, mọi người nên thử. Sản phẩm này rất chất lượng, mọi người nên thử',
-        },
-    ],
-};
-
-function DetailProductScreen() {
+function DetailProductScreen({ route, navigation }) {
+    const { product } = route.params;
     const [quantity, setQuantity] = useState();
-    const [product, setProduct] = useState(null);
-    useEffect(() => {
-        setProduct(PRODUCT);
-        // TODO: call api
-    }, []);
+    const user = useSelector(userSelector);
+    const [loading, setLoading] = useState(false);
+
     function handleDeleteComment(idComment) {
         console.log('delete comment', idComment);
     }
+
+    async function handleAddToCart() {
+        try {
+            setLoading(true);
+            const res = await fetch(`${API}/carts/add-product`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + user?.token,
+                },
+                body: JSON.stringify({
+                    product,
+                    quantity,
+                }),
+            });
+            const data = await res.json();
+            if (data.error) {
+                Toast.show({ description: data.error?.message });
+                setLoading(false);
+                return;
+            }
+            Toast.show({ description: 'Thêm vào giả hàng thành công!' });
+        } catch (err) {
+            console.log(err);
+            Toast.show({ description: 'Có lỗi xảy ra!' });
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <View position="relative" flex={1}>
             <View pb="60">
@@ -57,6 +68,7 @@ function DetailProductScreen() {
                         mt="3"
                         w="full"
                         h="300"
+                        bg="gray.300"
                         rounded="md"
                         resizeMode="cover"
                     />
@@ -149,7 +161,9 @@ function DetailProductScreen() {
                     min={product?.minPurchase || 0}
                     max={product?.quantity || 100}
                 />
-                <Button>Thêm vào giỏ hàng</Button>
+                <Button disabled={loading} onPress={handleAddToCart}>
+                    Thêm vào giỏ hàng
+                </Button>
             </HStack>
         </View>
     );

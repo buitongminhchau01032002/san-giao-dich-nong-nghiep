@@ -5,7 +5,7 @@ import NAVIGATION_KEY from '../constants/NavigationKey';
 export default function ProductCard({ product }) {
     const navigation = useNavigation();
     function handlePress() {
-        navigation.navigate(NAVIGATION_KEY.DetailProduct);
+        navigation.navigate(NAVIGATION_KEY.DetailProduct, { product });
     }
     return (
         <Pressable borderRadius={10} bg="white" onPress={handlePress}>

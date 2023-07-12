@@ -12,7 +12,7 @@ import SellProductScreen from '../screens/UserScreens/SellProduct/SellProduct';
 import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../redux/selectors/useSelector';
+import { userSelector } from '../redux/selectors/userSelector';
 
 export default function Navigation() {
     // hooks

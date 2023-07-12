@@ -4,15 +4,19 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import API from '../../constants/Api';
 import ProductCard from '../../components/ProductCard';
+import { useIsFocused } from '@react-navigation/native';
 
 function HomeScreen({ navigation }) {
     const dispatch = useDispatch();
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const isFocused = useIsFocused();
     useEffect(() => {
-        fetchCategories();
-        fetchProducts();
-    }, []);
+        if (isFocused) {
+            fetchCategories();
+            fetchProducts();
+        }
+    }, [isFocused]);
 
     async function fetchCategories() {
         try {
