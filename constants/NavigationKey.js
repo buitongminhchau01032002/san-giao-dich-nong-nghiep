@@ -12,6 +12,7 @@ const NAVIGATION_KEY = {
     SupplierRegister: 'SupplierRegister',
     SellProduct: 'SellProduct',
     User: 'User',
+    Quotation: 'Quotation',
 };
 
 export default NAVIGATION_KEY;

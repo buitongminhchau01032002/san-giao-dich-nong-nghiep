@@ -1,2 +1,2 @@
-const API = 'https://20f8-171-253-129-53.ngrok-free.app/api';
+const API = 'https://a051-171-253-134-106.ngrok-free.app/api';
 export default API;
