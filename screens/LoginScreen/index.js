@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
             toast.show({ description: 'Đăng nhập thành công!' });
         } catch (error) {
             console.log(error);
-            toast.show({ description: 'Something went wrong!' });
+            toast.show({ description: ' Có lỗi xảy ra!' });
         } finally {
             setLoading(false);
         }

@@ -7,7 +7,7 @@ import NAVIGATION_KEY from '../constants/NavigationKey';
 import SamplePopupScreen from '../screens/SamplePopupScreen';
 import DetailProductScreen from '../screens/DetailProductScreen';
 import SupplierRegisterScreen from '../screens/UserScreens/SupplierRegister/RegisterScreen';
-import SellProductScreen from '../screens/UserScreens/SellProduct/SellProduct';
+import SellProductScreen from '../screens/UserScreens/SellProduct';
 
 import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
