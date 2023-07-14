@@ -55,8 +55,8 @@ function SellProductScreen({ navigation }) {
     }
 
     async function handleCreateProduct(values) {
-        console.log({ ...values, image: values.image ? 'has image' : '' });
         try {
+            setLoading(true);
             const res = await fetch(`${API}/products`, {
                 method: 'POST',
                 headers: {
@@ -240,7 +240,6 @@ function SellProductScreen({ navigation }) {
                                 disabled={loading}
                                 onPressIn={() => {
                                     setIsValidateOnChange(true);
-                                    setLoading(true);
                                     validateForm().then(() => {
                                         handleSubmit();
                                     });

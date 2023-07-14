@@ -28,8 +28,8 @@ export default function LoginScreen({ navigation }) {
     // const forgetPassword = () => {};
 
     async function handleLogin(values) {
-        console.log('12312');
         try {
+            setLoading(true);
             const res = await fetch(`${API}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -47,7 +47,7 @@ export default function LoginScreen({ navigation }) {
             toast.show({ description: 'Đăng nhập thành công!' });
         } catch (error) {
             console.log(error);
-            toast.show({ description: ' Có lỗi xảy ra!' });
+            toast.show({ description: 'Có lỗi xảy ra!' });
         } finally {
             setLoading(false);
         }
@@ -73,7 +73,6 @@ export default function LoginScreen({ navigation }) {
                             variant="underlined"
                             placeholder="Nhập email của bạn"
                             value={values.email}
-                            
                             onChangeText={handleChange('email')}
                             _light={{
                                 placeholderTextColor: 'blueGray.400',
@@ -141,16 +140,9 @@ export default function LoginScreen({ navigation }) {
                         disabled={loading}
                         onPressIn={() => {
                             setIsValidateOnChange(true);
-                            setLoading(true);
-                            validateForm()
-                                .then(() => {
-                                    console.log('then');
-                                    handleSubmit();
-                                })
-                                .catch(() => {
-                                    console.log('catch');
-                                    setLoading(false);
-                                });
+                            validateForm().then(() => {
+                                handleSubmit();
+                            });
                         }}
                     >
                         ĐĂNG NHẬP
