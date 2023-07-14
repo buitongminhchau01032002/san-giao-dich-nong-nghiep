@@ -28,8 +28,8 @@ export default function QuotationScreen() {
     console.log(quotationRequests);
 
     return (
-        <Box px="3">
-            <HStack justifyContent="space-between" alignItems="center">
+        <Box px="3" flex={1}>
+            <HStack py="3" justifyContent="space-between" alignItems="center">
                 <Text bold fontSize="18">
                     Danh sách yêu cầu
                 </Text>
