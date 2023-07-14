@@ -101,9 +101,11 @@ function RootNavigator() {
                 <Stack.Screen
                     name={NAVIGATION_KEY.SellProduct}
                     options={{
+                        presentation:"card",
                         title: 'Đăng bán sản phẩm',
                         headerBackTitleVisible: false,
                         headerBackTitle: null,
+                        headerShown:false,
                     }}
                     component={SellProductScreen}
                 />
