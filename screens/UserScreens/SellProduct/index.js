@@ -154,7 +154,7 @@ function SellProductScreen({ navigation }) {
                             </FormControl>
 
                             <HStack mt="4" space={5}>
-                                <FormControl flex="1" mtFormControl="4" isRequired isInvalid={!!errors.price}>
+                                <FormControl flex="1" mt="4" isRequired isInvalid={!!errors.price}>
                                     <FormControl.Label>Giá bán</FormControl.Label>
                                     <Input
                                         keyboardType="numeric"
@@ -238,7 +238,7 @@ function SellProductScreen({ navigation }) {
                                 rounded="full"
                                 mt="4"
                                 disabled={loading}
-                                onPressIn={() => {
+                                onPress={() => {
                                     setIsValidateOnChange(true);
                                     validateForm().then(() => {
                                         handleSubmit();

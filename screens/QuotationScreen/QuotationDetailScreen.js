@@ -1,10 +1,13 @@
-import { Box, HStack, Image, ScrollView, Text } from 'native-base';
+import { Box, Button, FormControl, HStack, Image, Input, ScrollView, Text, Toast, View } from 'native-base';
 import { useEffect, useState } from 'react';
 import API from '../../constants/Api';
 import moment from 'moment';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import { Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../redux/selectors/userSelector';
+import { useRef } from 'react';
 
 function QuotationCard({ quotation, onChange }) {
     const user = useSelector(userSelector);
@@ -74,6 +77,7 @@ function QuotationCard({ quotation, onChange }) {
             <Text fontSize={18} bold color="primary.600">
                 {quotation?.price + '₫'}
             </Text>
+            {quotation?.description && <Text color="gray.600">{quotation?.description}</Text>}
             <HStack justifyContent="space-between">
                 <Box>
                     {quotation?.state === 'pending' && (
@@ -111,14 +115,55 @@ function QuotationCard({ quotation, onChange }) {
     );
 }
 
+const validateScheme = Yup.object({
+    price: Yup.number().required('Giá là bắt buộc').min(1, 'Giá phải lớn hơn 0'),
+});
+const initFormValue = {
+    price: '',
+    description: '',
+};
+
 export default function QuotationDetailScreen({ navigation, route }) {
     const { quotationRequestId } = route.params;
     const [quotationRequest, setQuotationRequest] = useState(null);
     const [quotations, setQuotations] = useState([]);
+    const [isValidateOnChange, setIsValidateOnChange] = useState(false);
+    const user = useSelector(userSelector);
+    const [loading, setLoading] = useState(false);
+    const [isShowList, setIsShowList] = useState(true);
+    const formikRef = useRef();
     useEffect(() => {
         fetchQuotationRequest();
         fetchQuotations();
     }, []);
+
+    async function handleCreateQuotation(values) {
+        try {
+            setLoading(true);
+            const res = await fetch(`${API}/quotations`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + user?.token,
+                },
+                body: JSON.stringify({ ...values, request: quotationRequest._id }),
+            });
+            const data = await res.json();
+            if (data.error) {
+                console.log(data.error);
+                Toast.show({ description: data.error.message });
+                return;
+            }
+            formikRef.current?.resetForm();
+            Toast.show({ description: 'Tạo báo giá thành công' });
+            fetchQuotations();
+        } catch (error) {
+            console.log(error);
+            Toast.show({ description: 'Có lỗi xảy ra!' });
+        } finally {
+            setLoading(false);
+        }
+    }
 
     async function fetchQuotationRequest() {
         try {
@@ -178,14 +223,85 @@ export default function QuotationDetailScreen({ navigation, route }) {
                     </Text>
                 </HStack>
             </Box>
-            <Text fontSize={18} fontWeight="medium">
-                Danh sách báo giá
-            </Text>
-            <ScrollView>
-                {quotations?.map((quotation) => (
-                    <QuotationCard key={quotation._id} quotation={quotation} onChange={() => fetchQuotations()} />
-                ))}
-            </ScrollView>
+
+            {!isShowList && (
+                <Box my="3" bg="white" rounded={8}>
+                    <Formik
+                        innerRef={formikRef}
+                        initialValues={initFormValue}
+                        validationSchema={validateScheme}
+                        onSubmit={(values) => handleCreateQuotation(values)}
+                        validateOnChange={isValidateOnChange}
+                    >
+                        {({ handleSubmit, handleChange, errors, values, validateForm, setFieldValue }) => (
+                            <View p="4" m={4} borderRadius={10} bg="white">
+                                <FormControl mt="4" isRequired isInvalid={!!errors.price}>
+                                    <FormControl.Label>Giá bán</FormControl.Label>
+                                    <Input
+                                        keyboardType="numeric"
+                                        fontSize={16}
+                                        variant="underlined"
+                                        placeholder="VD: 10000"
+                                        rightElement={<Text fontSize={16}>₫</Text>}
+                                        value={values.price}
+                                        onChangeText={handleChange('price')}
+                                    />
+                                    <FormControl.ErrorMessage>{errors.price}</FormControl.ErrorMessage>
+                                </FormControl>
+
+                                <FormControl isRequired isInvalid={!!errors.description} mt="4">
+                                    <FormControl.Label>Giới thiệu sản phẩm</FormControl.Label>
+                                    <Input
+                                        multiline={true}
+                                        fontSize={16}
+                                        variant="underlined"
+                                        placeholder="VD: Sản phẩm tươi ngon từ Đà Lạt."
+                                        value={values.description}
+                                        onChangeText={handleChange('description')}
+                                    />
+                                    <FormControl.ErrorMessage>{errors.description}</FormControl.ErrorMessage>
+                                </FormControl>
+                                <Button
+                                    rounded="full"
+                                    mt="4"
+                                    disabled={loading}
+                                    onPress={() => {
+                                        setIsValidateOnChange(true);
+                                        validateForm().then(() => {
+                                            handleSubmit();
+                                        });
+                                    }}
+                                >
+                                    TẠO BÁO GIÁ
+                                </Button>
+                                <Button rounded="full" mt="4" bg="yellow.600" onPress={() => setIsShowList(true)}>
+                                    DANH SÁCH BÁO GIÁ
+                                </Button>
+                            </View>
+                        )}
+                    </Formik>
+                </Box>
+            )}
+
+            {isShowList && (
+                <>
+                    <HStack justifyContent="space-between" alignItems="center">
+                        <Text fontSize={18} fontWeight="medium" onPress={handleCreateQuotation}>
+                            Danh sách báo giá
+                        </Text>
+                        <Button onPress={() => setIsShowList(false)}>Tạo báo giá</Button>
+                    </HStack>
+                    <ScrollView>
+                        {quotations?.map((quotation) => (
+                            <QuotationCard
+                                key={quotation._id}
+                                quotation={quotation}
+                                onChange={() => fetchQuotations()}
+                            />
+                        ))}
+                    </ScrollView>
+                </>
+            )}
         </Box>
     );
 }

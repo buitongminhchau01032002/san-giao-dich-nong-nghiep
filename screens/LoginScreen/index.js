@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }) {
                         />
                         <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>
                     </FormControl>
-                    <FormControl isRequired isInvalid={!!errors.password}>
+                    <FormControl mt={3} isRequired isInvalid={!!errors.password}>
                         <FormControl.Label>Mật khẩu</FormControl.Label>
                         <Input
                             width={'300'}
