@@ -13,6 +13,7 @@ import ProductListScreen from '../screens/ProductListScreen';
 import CartScreen from '../screens/CartScreen';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/selectors/userSelector';
+import QuotationDetailScreen from '../screens/QuotationScreen/QuotationDetailScreen';
 
 export default function Navigation() {
     // hooks
@@ -105,6 +106,15 @@ function RootNavigator() {
                         headerBackTitle: null,
                     }}
                     component={SellProductScreen}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.QuotationDetail}
+                    options={{
+                        title: 'Chi tiết báo giá',
+                        headerBackTitleVisible: false,
+                        headerBackTitle: null,
+                    }}
+                    component={QuotationDetailScreen}
                 />
             </Stack.Group>
         </Stack.Navigator>

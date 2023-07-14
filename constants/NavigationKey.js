@@ -13,6 +13,7 @@ const NAVIGATION_KEY = {
     SellProduct: 'SellProduct',
     User: 'User',
     Quotation: 'Quotation',
+    QuotationDetail: 'QuotationDetail',
 };
 
 export default NAVIGATION_KEY;

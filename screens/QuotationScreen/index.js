@@ -40,21 +40,6 @@ export default function QuotationScreen() {
                 {quotationRequests.map((quotationRequest) => (
                     <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
                 ))}
-                {quotationRequests.map((quotationRequest) => (
-                    <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
-                ))}
-                {quotationRequests.map((quotationRequest) => (
-                    <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
-                ))}
-                {quotationRequests.map((quotationRequest) => (
-                    <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
-                ))}
-                {quotationRequests.map((quotationRequest) => (
-                    <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
-                ))}
-                {quotationRequests.map((quotationRequest) => (
-                    <QuotationRequestCard key={quotationRequest._id} quotationRequest={quotationRequest} />
-                ))}
             </ScrollView>
         </Box>
     );
