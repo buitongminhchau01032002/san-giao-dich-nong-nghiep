@@ -1,5 +1,5 @@
 import { Button, Select, Center, Text, Input, View, ScrollView, HStack, FormControl, Toast } from 'native-base';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import ImageInput from './components/ImageInput';
@@ -33,6 +33,26 @@ function SellProductScreen({ navigation }) {
     const [isValidateOnChange, setIsValidateOnChange] = useState(false);
     const user = useSelector(userSelector);
     const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const formikRef = useRef();
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    async function fetchCategories() {
+        try {
+            const res = await fetch(`${API}/categories`);
+            const data = await res.json();
+            if (data.error) {
+                console.log(data.error);
+                return;
+            }
+            setCategories(data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     async function handleCreateProduct(values) {
         console.log({ ...values, image: values.image ? 'has image' : '' });
@@ -51,7 +71,7 @@ function SellProductScreen({ navigation }) {
                 console.log(data.error);
                 return;
             }
-            navigation.goBack();
+            formikRef.current?.resetForm();
             Toast.show({ description: 'Đăng bán thành công!' });
         } catch (error) {
             console.log(error);
@@ -60,9 +80,11 @@ function SellProductScreen({ navigation }) {
             setLoading(false);
         }
     }
+
     return (
         <ScrollView>
             <Formik
+                innerRef={formikRef}
                 initialValues={initFormValue}
                 validationSchema={validateScheme}
                 onSubmit={(values) => handleCreateProduct(values)}
@@ -92,11 +114,9 @@ function SellProductScreen({ navigation }) {
                                 selectedValue={values.category}
                                 onValueChange={handleChange('category')}
                             >
-                                <Select.Item label="Trái cây" value="key0" />
-                                <Select.Item label="Rau củ" value="key1" />
-                                <Select.Item label="Debit Card" value="key2" />
-                                <Select.Item label="Credit Card" value="key3" />
-                                <Select.Item label="Net Banking" value="key4" />
+                                {categories?.map((category) => (
+                                    <Select.Item key={category._id} label={category.name} value={category._id} />
+                                ))}
                             </Select>
                             <FormControl.ErrorMessage>{errors.category}</FormControl.ErrorMessage>
                         </FormControl>
@@ -123,11 +143,12 @@ function SellProductScreen({ navigation }) {
                                     selectedValue={values.unit}
                                     onValueChange={handleChange('unit')}
                                 >
-                                    <Select.Item label="Trái cây" value="key0" />
-                                    <Select.Item label="Rau củ" value="key1" />
-                                    <Select.Item label="Debit Card" value="key2" />
-                                    <Select.Item label="Credit Card" value="key3" />
-                                    <Select.Item label="Net Banking" value="key4" />
+                                    <Select.Item label="Kg" value="kg" />
+                                    <Select.Item label="Tạ" value="tạ" />
+                                    <Select.Item label="Tấn" value="tấn" />
+                                    <Select.Item label="Bó" value="bó" />
+                                    <Select.Item label="Gói" value="gói" />
+                                    <Select.Item label="Thùng" value="thùng" />
                                 </Select>
                                 <FormControl.ErrorMessage>{errors.unit}</FormControl.ErrorMessage>
                             </FormControl>
@@ -174,14 +195,18 @@ function SellProductScreen({ navigation }) {
                         </FormControl>
                         <FormControl isRequired isInvalid={!!errors.image} mt="4">
                             <FormControl.Label>Hình ảnh sản phẩm</FormControl.Label>
-                            <ImageInput mt="2" onChange={(image) => setFieldValue('image', image)} />
+                            <ImageInput
+                                mt="2"
+                                initValue={values.image}
+                                onChange={(image) => setFieldValue('image', image)}
+                            />
                             <FormControl.ErrorMessage>{errors.image}</FormControl.ErrorMessage>
                         </FormControl>
                         <Button
                             rounded="full"
                             mt="4"
                             disabled={loading}
-                            onPress={() => {
+                            onPressIn={() => {
                                 setIsValidateOnChange(true);
                                 setLoading(true);
                                 validateForm().then(() => {
