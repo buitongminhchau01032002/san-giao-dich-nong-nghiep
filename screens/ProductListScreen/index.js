@@ -81,7 +81,7 @@ function ProductListScreen({ route, navigation }) {
                 />
             </Box>
             <ScrollView flex={1}>
-                <Box px="1.5" key={category._id}>
+                <Box px="1.5" >
                     <HStack flexWrap="wrap" w="full">
                         {[...searchProducts]
                             .filter((product) => product.category._id === category._id)
