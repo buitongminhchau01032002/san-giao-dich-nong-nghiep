@@ -206,7 +206,7 @@ function SellProductScreen({ navigation }) {
                             rounded="full"
                             mt="4"
                             disabled={loading}
-                            onPressIn={() => {
+                            onPress={() => {
                                 setIsValidateOnChange(true);
                                 setLoading(true);
                                 validateForm().then(() => {
