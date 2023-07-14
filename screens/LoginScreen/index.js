@@ -81,9 +81,9 @@ export default function LoginScreen({ navigation }) {
                                 placeholderTextColor: 'blueGray.50',
                             }}
                         />
-                        <FormControl.ErrorMessage>{errors.password}</FormControl.ErrorMessage>
+                        <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>
                     </FormControl>
-                    <FormControl isRequired isInvalid={!!errors.email}>
+                    <FormControl isRequired isInvalid={!!errors.password}>
                         <FormControl.Label>Mật khẩu</FormControl.Label>
                         <Input
                             width={'300'}

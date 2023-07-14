@@ -25,8 +25,7 @@ function stringToSlug(str) {
     return str;
 }
 
-function ProductListScreen({ route, navigation }) {
-    const { category } = route.params;
+function AllProductListScreen({ navigation }) {
     const [products, setProducts] = useState([]);
     const [searchProducts, setSearchProducts] = useState([]);
     const [search, setSearch] = useState('');
@@ -37,11 +36,7 @@ function ProductListScreen({ route, navigation }) {
         }
     }, [isFocused]);
 
-    useEffect(() => {
-        navigation.setOptions({
-            title: category.name,
-        });
-    }, [category]);
+    
 
     useEffect(() => {
         if (!search) {
@@ -84,7 +79,6 @@ function ProductListScreen({ route, navigation }) {
                 <Box px="1.5" >
                     <HStack flexWrap="wrap" w="full">
                         {[...searchProducts]
-                            .filter((product) => product.category._id === category._id)
                             .reverse()
                             .map((product) => (
                                 <Box key={product._id} w="50%" p="1.5">
@@ -98,4 +92,4 @@ function ProductListScreen({ route, navigation }) {
     );
 }
 
-export default ProductListScreen;
+export default AllProductListScreen;

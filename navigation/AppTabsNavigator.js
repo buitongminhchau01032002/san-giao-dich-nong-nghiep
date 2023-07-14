@@ -3,10 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import NAVIGATION_KEY from '../constants/NavigationKey';
 import HomeScreen from '../screens/HomeScreen';
 import { MyTabBar } from './MyTabBar';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,AntDesign } from '@expo/vector-icons';
 import { useTheme } from 'native-base';
 import UserScreen from '../screens/UserScreens/UserScreen';
 import QuotationScreen from '../screens/QuotationScreen';
+import AllProductListScreen from '../screens/ProductListScreen/allProduct';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -37,11 +38,11 @@ export default function AppTabsNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="TestScreen2"
-                component={HomeScreen}
+                name='Search'
+                component={AllProductListScreen}
                 options={{
-                    title: 'Test Screen 2',
-                    tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    title: 'Tìm kiếm',
+                    tabBarIcon: () => <Ionicons name="search-outline" size={24}  color={colors.primary[500]} />,
                 }}
             />
             <BottomTab.Screen
@@ -49,7 +50,7 @@ export default function AppTabsNavigator() {
                 component={UserScreen}
                 options={{
                     title: 'Cá nhân',
-                    tabBarIcon: () => <Ionicons name="home-outline" size={24} color={colors.primary[500]} />,
+                    tabBarIcon: () =><AntDesign name="user" size={24}  color={colors.primary[500]} />,
                 }}
             />
         </BottomTab.Navigator>
