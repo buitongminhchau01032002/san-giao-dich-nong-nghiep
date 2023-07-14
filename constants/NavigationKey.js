@@ -14,6 +14,7 @@ const NAVIGATION_KEY = {
     User: 'User',
     Quotation: 'Quotation',
     QuotationDetail: 'QuotationDetail',
+    CreateQuotationRequest: 'CreateQuotationRequest',
 };
 
 export default NAVIGATION_KEY;

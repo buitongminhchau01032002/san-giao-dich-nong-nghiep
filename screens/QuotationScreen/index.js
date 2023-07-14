@@ -3,13 +3,18 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import API from '../../constants/Api';
 import QuotationRequestCard from '../../components/QuotationRequestCard';
+import NAVIGATION_KEY from '../../constants/NavigationKey';
+import { useIsFocused } from '@react-navigation/core';
 
-export default function QuotationScreen() {
+export default function QuotationScreen({ navigation }) {
     const [quotationRequests, setQuotationRequests] = useState([]);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
-        fetchQuotationRequests();
-    }, []);
+        if (isFocused) {
+            fetchQuotationRequests();
+        }
+    }, [isFocused]);
 
     async function fetchQuotationRequests() {
         try {
@@ -33,7 +38,7 @@ export default function QuotationScreen() {
                 <Text bold fontSize="18">
                     Danh sách yêu cầu
                 </Text>
-                <Button>Tạo yêu cầu</Button>
+                <Button onPress={() => navigation.navigate(NAVIGATION_KEY.CreateQuotationRequest)}>Tạo yêu cầu</Button>
             </HStack>
 
             <ScrollView>

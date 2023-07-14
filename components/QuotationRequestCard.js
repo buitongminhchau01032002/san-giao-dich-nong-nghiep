@@ -31,11 +31,6 @@ export default function QuotationRequestCard({ quotationRequest }) {
                     <Text fontSize={18} bold color="primary.600">
                         {quotationRequest.price + '₫'}
                     </Text>
-                    <Text fontSize="12">
-                        {moment(quotationRequest.startDate).format('DD/MM/YYYY') +
-                            ' - ' +
-                            moment(quotationRequest.endDate).format('DD/MM/YYYY')}
-                    </Text>
                 </HStack>
             </Box>
         </Pressable>

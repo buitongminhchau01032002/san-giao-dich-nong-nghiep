@@ -14,6 +14,7 @@ import CartScreen from '../screens/CartScreen';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../redux/selectors/userSelector';
 import QuotationDetailScreen from '../screens/QuotationScreen/QuotationDetailScreen';
+import CreateQuotationRequestScreen from '../screens/QuotationScreen/CreateQuotationRequestScreen';
 
 export default function Navigation() {
     // hooks
@@ -92,23 +93,22 @@ function RootNavigator() {
                 <Stack.Screen
                     name={NAVIGATION_KEY.SupplierRegister}
                     options={{
-                        presentation:'card',
+                        presentation: 'card',
                         title: 'Đăng ký nhà cung cấp',
                         headerBackTitleVisible: false,
                         headerBackTitle: null,
-                        headerShown:false,
-
+                        headerShown: false,
                     }}
                     component={SupplierRegisterScreen}
                 />
                 <Stack.Screen
                     name={NAVIGATION_KEY.SellProduct}
                     options={{
-                        presentation:"card",
+                        presentation: 'card',
                         title: 'Đăng bán sản phẩm',
                         headerBackTitleVisible: false,
                         headerBackTitle: null,
-                        headerShown:false,
+                        headerShown: false,
                     }}
                     component={SellProductScreen}
                 />
@@ -120,6 +120,15 @@ function RootNavigator() {
                         headerBackTitle: null,
                     }}
                     component={QuotationDetailScreen}
+                />
+                <Stack.Screen
+                    name={NAVIGATION_KEY.CreateQuotationRequest}
+                    options={{
+                        title: 'Tạo YC báo giá',
+                        headerBackTitleVisible: false,
+                        headerBackTitle: null,
+                    }}
+                    component={CreateQuotationRequestScreen}
                 />
             </Stack.Group>
         </Stack.Navigator>

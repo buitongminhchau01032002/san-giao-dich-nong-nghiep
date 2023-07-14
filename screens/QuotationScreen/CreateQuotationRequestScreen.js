@@ -2,34 +2,28 @@ import { Button, Select, Center, Text, Input, View, ScrollView, HStack, FormCont
 import { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import ImageInput from './components/ImageInput';
-import { Platform } from 'react-native';
-import API from '../../../constants/Api';
+import { userSelector } from '../../redux/selectors/userSelector';
+import API from '../../constants/Api';
 import { useSelector } from 'react-redux';
-import { userSelector } from '../../../redux/selectors/userSelector';
 
 const validateScheme = Yup.object({
-    name: Yup.string().required('Tên sản phẩm là bắt buộc'),
+    productName: Yup.string().required('Tên sản phẩm là bắt buộc'),
     category: Yup.string().required('Danh mục là bắt buộc'),
-    price: Yup.number().required('Giá là bắt buộc').min(1, 'Giá phải lớn hơn 0'),
+    quantity: Yup.number().required('Số lượng là bắt buộc'),
     unit: Yup.string().required('Đơn vị là bắt buộc'),
-    quantity: Yup.number().required('Số lượng là bắt buộc').min(1, 'Số lượng phải lớn hơn 0'),
-    minPurchase: Yup.number().required('Số lượng tối thiểu là bắt buộc').min(1, 'Số lượng tối thiểu phải lớn hơn 0'),
-    description: Yup.string().required('Mô tả sản phẩm là bắt buộc'),
-    image: Yup.string().required('Hình ảnh là bắt buộc'),
+    price: Yup.number().required('Giá là bắt buộc'),
+    description: Yup.string().required('Mô tả là bắt buộc'),
 });
 const initFormValue = {
-    name: '',
+    productName: '',
     category: '',
-    price: '',
-    unit: '',
     quantity: '',
-    minPurchase: '',
+    unit: '',
+    price: '',
     description: '',
-    image: '',
 };
 
-function SellProductScreen({ navigation }) {
+function CreateQuotationRequestScreen({ navigation }) {
     const [isValidateOnChange, setIsValidateOnChange] = useState(false);
     const user = useSelector(userSelector);
     const [loading, setLoading] = useState(false);
@@ -54,10 +48,11 @@ function SellProductScreen({ navigation }) {
         }
     }
 
-    async function handleCreateProduct(values) {
+    async function handleCreateQuotationRequest(values) {
         try {
+            console.log('post');
             setLoading(true);
-            const res = await fetch(`${API}/products`, {
+            const res = await fetch(`${API}/quotation-requests`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +67,7 @@ function SellProductScreen({ navigation }) {
                 return;
             }
             formikRef.current?.resetForm();
-            Toast.show({ description: 'Đăng bán thành công!' });
+            Toast.show({ description: 'Tạo báo giá thành công!' });
         } catch (error) {
             console.log(error);
             Toast.show({ description: 'Có lỗi xảy ra!' });
@@ -83,57 +78,26 @@ function SellProductScreen({ navigation }) {
 
     return (
         <View flex={1}>
-            <View
-                py={4}
-                pb={2}
-                justifyContent={'flex-start'}
-                alignItems={'flex-end'}
-                h={'88'}
-                bg={'white'}
-                flexDirection={'row'}
-                shadow={2}
-            >
-                <Text
-                    px={4}
-                    onPress={() => navigation.goBack()}
-                    fontWeight={'normal'}
-                    color={'red.500'}
-                    fontSize={18}
-                    mr={8}
-                >
-                    Trở về
-                </Text>
-                <Text fontWeight={'semibold'} fontSize={17}>
-                    Đăng bán sản phẩm
-                </Text>
-                <Text
-                    px={4}
-                    onPress={() => navigation.goBack()}
-                    fontWeight={'normal'}
-                    color={'red.500'}
-                    fontSize={18}
-                ></Text>
-            </View>
             <ScrollView>
                 <Formik
                     innerRef={formikRef}
                     initialValues={initFormValue}
                     validationSchema={validateScheme}
-                    onSubmit={(values) => handleCreateProduct(values)}
+                    onSubmit={(values) => handleCreateQuotationRequest(values)}
                     validateOnChange={isValidateOnChange}
                 >
                     {({ handleSubmit, handleChange, errors, values, validateForm, setFieldValue }) => (
                         <View p="4" m={4} borderRadius={10} bg="white">
-                            <FormControl isRequired isInvalid={!!errors.name}>
+                            <FormControl isRequired isInvalid={!!errors.productName}>
                                 <FormControl.Label>Tên sản phẩm</FormControl.Label>
                                 <Input
                                     fontSize={16}
                                     variant="underlined"
                                     placeholder="VD: Dưa hấu không hạt"
-                                    value={values.name}
-                                    onChangeText={handleChange('name')}
+                                    value={values.productName}
+                                    onChangeText={handleChange('productName')}
                                 />
-                                <FormControl.ErrorMessage>{errors.name}</FormControl.ErrorMessage>
+                                <FormControl.ErrorMessage>{errors.productName}</FormControl.ErrorMessage>
                             </FormControl>
 
                             <FormControl mt="4" isRequired isInvalid={!!errors.category}>
@@ -155,7 +119,7 @@ function SellProductScreen({ navigation }) {
 
                             <HStack mt="4" space={5}>
                                 <FormControl flex="1" isRequired isInvalid={!!errors.price}>
-                                    <FormControl.Label>Giá bán</FormControl.Label>
+                                    <FormControl.Label>Giá mong muốn</FormControl.Label>
                                     <Input
                                         keyboardType="numeric"
                                         fontSize={16}
@@ -186,35 +150,21 @@ function SellProductScreen({ navigation }) {
                                 </FormControl>
                             </HStack>
 
-                            <HStack mt="4" space={5}>
-                                <FormControl isRequired isInvalid={!!errors.quantity} flex="1">
-                                    <FormControl.Label>Số lượng</FormControl.Label>
-                                    <Input
-                                        keyboardType="numeric"
-                                        fontSize={16}
-                                        variant="underlined"
-                                        placeholder="VD: 1000"
-                                        value={values.quantity}
-                                        onChangeText={handleChange('quantity')}
-                                    />
-                                    <FormControl.ErrorMessage>{errors.quantity}</FormControl.ErrorMessage>
-                                </FormControl>
-                                <FormControl isRequired isInvalid={!!errors.minPurchase} flex="1">
-                                    <FormControl.Label>Mua tối thiểu</FormControl.Label>
-                                    <Input
-                                        keyboardType="numeric"
-                                        fontSize={16}
-                                        variant="underlined"
-                                        placeholder="VD: 10"
-                                        value={values.minPurchase}
-                                        onChangeText={handleChange('minPurchase')}
-                                    />
-                                    <FormControl.ErrorMessage>{errors.minPurchase}</FormControl.ErrorMessage>
-                                </FormControl>
-                            </HStack>
+                            <FormControl mt="4" isRequired isInvalid={!!errors.quantity} flex="1">
+                                <FormControl.Label>Số lượng</FormControl.Label>
+                                <Input
+                                    keyboardType="numeric"
+                                    fontSize={16}
+                                    variant="underlined"
+                                    placeholder="VD: 1000"
+                                    value={values.quantity}
+                                    onChangeText={handleChange('quantity')}
+                                />
+                                <FormControl.ErrorMessage>{errors.quantity}</FormControl.ErrorMessage>
+                            </FormControl>
 
                             <FormControl isRequired isInvalid={!!errors.description} mt="4">
-                                <FormControl.Label>Giới thiệu sản phẩm</FormControl.Label>
+                                <FormControl.Label>Mô tả sản phẩm</FormControl.Label>
                                 <Input
                                     multiline={true}
                                     fontSize={16}
@@ -225,15 +175,7 @@ function SellProductScreen({ navigation }) {
                                 />
                                 <FormControl.ErrorMessage>{errors.description}</FormControl.ErrorMessage>
                             </FormControl>
-                            <FormControl isRequired isInvalid={!!errors.image} mt="4">
-                                <FormControl.Label>Hình ảnh sản phẩm</FormControl.Label>
-                                <ImageInput
-                                    mt="2"
-                                    initValue={values.image}
-                                    onChange={(image) => setFieldValue('image', image)}
-                                />
-                                <FormControl.ErrorMessage>{errors.image}</FormControl.ErrorMessage>
-                            </FormControl>
+
                             <Button
                                 rounded="full"
                                 mt="4"
@@ -245,7 +187,7 @@ function SellProductScreen({ navigation }) {
                                     });
                                 }}
                             >
-                                ĐĂNG BÁN
+                                TẠO BÁO GIÁ
                             </Button>
                         </View>
                     )}
@@ -255,4 +197,4 @@ function SellProductScreen({ navigation }) {
     );
 }
 
-export default SellProductScreen;
+export default CreateQuotationRequestScreen;
