@@ -82,9 +82,9 @@ export default function LoginScreen({ navigation }) {
                                 placeholderTextColor: 'blueGray.50',
                             }}
                         />
-                        <FormControl.ErrorMessage>{errors.password}</FormControl.ErrorMessage>
+                        <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>
                     </FormControl>
-                    <FormControl isRequired isInvalid={!!errors.email}>
+                    <FormControl isRequired isInvalid={!!errors.password}>
                         <FormControl.Label>Mật khẩu</FormControl.Label>
                         <Input
                             width={'300'}
@@ -141,16 +141,12 @@ export default function LoginScreen({ navigation }) {
                         disabled={loading}
                         onPressIn={() => {
                             setIsValidateOnChange(true);
-                            setLoading(true);
                             validateForm()
                                 .then(() => {
                                     console.log('then');
                                     handleSubmit();
                                 })
-                                .catch(() => {
-                                    console.log('catch');
-                                    setLoading(false);
-                                });
+                               
                         }}
                     >
                         ĐĂNG NHẬP

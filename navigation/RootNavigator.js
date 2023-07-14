@@ -92,9 +92,12 @@ function RootNavigator() {
                 <Stack.Screen
                     name={NAVIGATION_KEY.SupplierRegister}
                     options={{
+                        presentation:'card',
                         title: 'Đăng ký nhà cung cấp',
                         headerBackTitleVisible: false,
                         headerBackTitle: null,
+                        headerShown:false,
+
                     }}
                     component={SupplierRegisterScreen}
                 />
