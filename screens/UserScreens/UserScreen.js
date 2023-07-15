@@ -2,22 +2,23 @@ import { Button, Center, Pressable, Text, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { Feather, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import NAVIGATION_KEY from '../../constants/NavigationKey';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../redux/slices/userSlice';
+import { userSelector } from '../../redux/selectors/userSelector';
 
 function UserScreen({ navigation }) {
     const dispatch = useDispatch();
+    const user = useSelector(userSelector);
     return (
-        <View bg={'#1FA97C'} flex={1}>
+        <View bg="primary.100" flex={1}>
             <View margin={4} flexDirection={'row'}>
                 <View marginRight={5} borderRadius={'50'} height={'20'} width={'20'} bg={'white'}></View>
                 <View alignSelf={'center'}>
                     <Text fontWeight={'semibold'} fontSize={18}>
-                        Nguyễn Văn A
+                        {user?.name}
                     </Text>
-                    <Text fontWeight={'light'} fontSize={14}>
-                        Nhà cung cấp
-                    </Text>
+                    <Text fontSize={14}>{user?.email}</Text>
+                    <Text fontSize={14}>{user?.isSeller && 'Nhà cung cấp'}</Text>
                 </View>
             </View>
             <View paddingTop={'4'} bg={'white'} borderRadius={24} height={'full'}>
