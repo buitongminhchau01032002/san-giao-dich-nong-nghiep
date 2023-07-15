@@ -1,9 +1,12 @@
-import { Button, Center, Text, View } from 'native-base';
+import { Button, Center, Pressable, Text, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
-import { Feather, Entypo, AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, Entypo, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import NAVIGATION_KEY from '../../constants/NavigationKey';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../redux/slices/userSlice';
 
 function UserScreen({ navigation }) {
+    const dispatch = useDispatch();
     return (
         <View bg={'#1FA97C'} flex={1}>
             <View margin={4} flexDirection={'row'}>
@@ -52,7 +55,7 @@ function UserScreen({ navigation }) {
                     </View>
                 </TouchableOpacity>
                 <View marginLeft={6} marginRight={6} height={'0.5'} backgroundColor={'gray.300'} />
-                <TouchableOpacity  >
+                <Pressable onPress={() => dispatch(userActions.logout())}>
                     <View
                         paddingRight={4}
                         paddingLeft={4}
@@ -62,12 +65,12 @@ function UserScreen({ navigation }) {
                         flexDirection={'row'}
                     >
                         <View flexDirection={'row'}>
-                        <MaterialCommunityIcons name="logout" size={24} color="black" />
+                            <MaterialCommunityIcons name="logout" size={24} color="black" />
                             <Text fontSize={'16'}> Đăng xuất</Text>
                         </View>
                         <AntDesign name="right" size={20} color="black" />
                     </View>
-                </TouchableOpacity>
+                </Pressable>
                 <View marginLeft={6} marginRight={6} height={'0.5'} backgroundColor={'gray.300'} />
             </View>
         </View>

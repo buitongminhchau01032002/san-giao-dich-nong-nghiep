@@ -21,7 +21,7 @@ import { userSelector } from '../../redux/selectors/userSelector';
 
 function DetailProductScreen({ route, navigation }) {
     const { product } = route.params;
-    const [quantity, setQuantity] = useState();
+    const [quantity, setQuantity] = useState(product?.minPurchase);
     const user = useSelector(userSelector);
     const [loading, setLoading] = useState(false);
 
