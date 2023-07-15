@@ -73,6 +73,7 @@ function SellProductScreen({ navigation }) {
             }
             formikRef.current?.resetForm();
             Toast.show({ description: 'Đăng bán thành công!' });
+            navigation.goBack();
         } catch (error) {
             console.log(error);
             Toast.show({ description: 'Có lỗi xảy ra!' });
